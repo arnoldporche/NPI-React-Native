@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { FlatList } from "react-native";
 import { ListItem } from "react-native-elements";
-import { CAMPSITES } from "../shared/campsites";
+import { INDIVIDUALS } from "../shared/individuals";
 
 class Individual extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      campsites: CAMPSITES
+      individuals: INDIVIDUALS
     };
   }
 
@@ -20,17 +20,17 @@ class Individual extends Component {
     const renderIndividualItem = ({ item }) => {
       return (
         <ListItem
-          title={item.name}
-          subtitle={item.description}
-          onPress={() => navigate("CampsiteInfo", { campsiteId: item.id })}
-          leftAvatar={{ source: require("./images/react-lake.jpg") }}
+          title={`${item.name}, ${item.firstName}`}
+          subtitle={`NPI: ${item.npi}`}
+          onPress={() => navigate("IndividualInfo", { individualId: item.id })}
+          leftAvatar={{ source: { uri: item.image } }}
         />
       );
     };
 
     return (
       <FlatList
-        data={this.state.campsites}
+        data={this.state.individuals}
         renderItem={renderIndividualItem}
         keyExtractor={item => item.id.toString()}
       />
