@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Home from "./HomeComponent";
 import Individual from "./IndividualComponent";
 import IndividualInfo from "./IndividualInfoComponent";
+import Organization from "./OrganizationComponent";
 import ActionBarImage from "./ActionBarImage";
 import {
   View,
@@ -21,6 +22,26 @@ import SafeAreaView from "react-native-safe-area-view";
 
 // Not t display warning issues (yellow) within the app - once parts are updated, then I can remove this for production
 console.disableYellowBox = true;
+
+const OrganizationNavigator = createStackNavigator(
+  {
+    Organization: { screen: Organization }
+  },
+  {
+    initialRouteName: "Organization",
+    navigationOptions: {
+      headerLeft: <ActionBarImage />,
+      headerStyle: {
+        height: 20,
+        backgroundColor: "#1565C0"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        color: "#fff"
+      }
+    }
+  }
+);
 
 const IndividualNavigator = createStackNavigator(
   {
@@ -100,6 +121,14 @@ const MainNavigator = createDrawerNavigator(
     },
     Individual: {
       screen: IndividualNavigator,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <Icon name="list" type="font-awesome" size={24} color={tintColor} />
+        )
+      }
+    },
+    Organization: {
+      screen: OrganizationNavigator,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <Icon name="list" type="font-awesome" size={24} color={tintColor} />
