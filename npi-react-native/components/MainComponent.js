@@ -3,6 +3,8 @@ import Home from "./HomeComponent";
 import Individual from "./IndividualComponent";
 import IndividualInfo from "./IndividualInfoComponent";
 import Organization from "./OrganizationComponent";
+import OrganizationCategory from "./OrganizationCategoryComponent";
+import OrganizationInfo from "./OrganizationInfoComponent";
 import ActionBarImage from "./ActionBarImage";
 import {
   View,
@@ -25,7 +27,9 @@ console.disableYellowBox = true;
 
 const OrganizationNavigator = createStackNavigator(
   {
-    Organization: { screen: Organization }
+    Organization: { screen: Organization },
+    OrganizationCategory: { screen: OrganizationCategory },
+    OrganizationInfo: { screen: OrganizationInfo }
   },
   {
     initialRouteName: "Organization",
@@ -123,7 +127,12 @@ const MainNavigator = createDrawerNavigator(
       screen: IndividualNavigator,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
-          <Icon name="list" type="font-awesome" size={24} color={tintColor} />
+          <Icon
+            name="user-md"
+            type="font-awesome"
+            size={24}
+            color={tintColor}
+          />
         )
       }
     },
@@ -131,7 +140,12 @@ const MainNavigator = createDrawerNavigator(
       screen: OrganizationNavigator,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
-          <Icon name="list" type="font-awesome" size={24} color={tintColor} />
+          <Icon
+            name="building"
+            type="font-awesome"
+            size={24}
+            color={tintColor}
+          />
         )
       }
     }

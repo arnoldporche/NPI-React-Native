@@ -8,9 +8,9 @@ import {
   TouchableOpacity,
   ScrollView
 } from "react-native";
-import { Card } from "react-native-elements";
+import { Card, Icon } from "react-native-elements";
 
-class Individual extends Component {
+class OrganizationCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,8 +20,12 @@ class Individual extends Component {
   }
 
   componentDidMount() {
+    const taxonomy_description = this.props.navigation.getParam(
+      "taxonomy_description"
+    );
     fetch(
-      "https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=10&pretty=true&state=NV&city=las vegas&enumeration_type=NPI-1"
+      "https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=10&pretty=true&state=NV&city=las vegas&enumeration_type=NPI-2&taxonomy_description=" +
+        taxonomy_description
     )
       .then(response => response.json())
       .then(responseJson => {
@@ -35,7 +39,7 @@ class Individual extends Component {
   }
 
   static navigationOptions = {
-    title: "Individual"
+    title: "Organization"
   };
 
   PracticeLocations = data => {
@@ -55,7 +59,7 @@ class Individual extends Component {
       return (
         <TouchableOpacity
           onPress={() =>
-            navigate("IndividualInfo", { IndividualId: data.item.number })
+            navigate("OrganizationInfo", { organizationId: data.item.number })
           }
         >
           <Card>
@@ -116,4 +120,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Individual;
+export default OrganizationCategory;

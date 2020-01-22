@@ -10,9 +10,9 @@ import {
 } from "react-native";
 import { Card } from "react-native-elements";
 
-class IndividualInfo extends Component {
+class OrganizationInfo extends Component {
   static navigationOptions = {
-    title: "Individual Information"
+    title: "Organization Information"
   };
 
   constructor(props) {
@@ -24,11 +24,11 @@ class IndividualInfo extends Component {
   }
 
   componentDidMount() {
-    const IndividualId = this.props.navigation.getParam("IndividualId");
+    const organizationId = this.props.navigation.getParam("organizationId");
     fetch(
       //"https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=1&pretty=true&number=1942267901"
       "https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=1&pretty=true&number=" +
-        IndividualId
+        organizationId
     )
       .then(response => response.json())
       .then(responseJson => {
@@ -84,7 +84,7 @@ class IndividualInfo extends Component {
             featuredTitle={data.item.basic.name}
             image={{
               uri:
-                "https://forum.facmedicine.com/attachments/3937372880afb2ee5398b59950598013-jpg.20803/"
+                "https://cdn.britannica.com/12/130512-004-AD0A7CA4/campus-Riverside-Ottawa-The-Hospital-Ont.jpg"
             }}
           >
             {data.item.taxonomies.map(taxonomy => (
@@ -92,6 +92,9 @@ class IndividualInfo extends Component {
                 {taxonomy.desc}
               </Text>
             ))}
+            <Text style={{ fontSize: 18, color: "gray" }}>
+              Organization Name: {data.item.basic.organization_name}
+            </Text>
             <Text style={{ fontSize: 18, color: "silver" }}>
               NPI: {data.item.number}
             </Text>
@@ -142,4 +145,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default IndividualInfo;
+export default OrganizationInfo;

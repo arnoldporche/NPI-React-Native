@@ -1,22 +1,15 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
-  ActivityIndicator,
-  FlatList,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView,
+  Dimensions,
+  Image
 } from "react-native";
-import { Icon } from "react-native-elements";
 
-export default class Organization extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: "Source Listing",
-      headerStyle: { backgroundColor: "#fff" },
-      headerTitleStyle: { textAlign: "center", flex: 1 }
-    };
-  };
+class Organization extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,83 +18,285 @@ export default class Organization extends React.Component {
     };
   }
 
-  componentDidMount() {
-    //fetch("https://jsonplaceholder.typicode.com/users")
-    fetch(
-      "https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=5&pretty=true&state=NV&city=las vegas&enumeration_type=NPI-2"
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        //console.log(responseJson);
-        this.setState({
-          loading: false,
-          dataSource: responseJson
-        });
-      })
-      .catch(error => console.log(error)); //to catch the errors if any
-  }
-
-  FlatListItemSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 0.5,
-          width: "100%",
-          backgroundColor: "rgba(0,0,0,0.5)"
-        }}
-      />
-    );
-  };
-
-  renderItem = data => (
-    <TouchableOpacity style={styles.list}>
-      <Text style={{ fontWeight: "bold", fontSize: 15 }}>
-        {data.item.basic.name}
-      </Text>
-      {data.item.taxonomies.map(taxonomy => (
-        <Text>{taxonomy.desc}</Text>
-      ))}
-      <FlatList
-        data={data.item.practiceLocations}
-        renderItem={item => this.PracticeLocations(item)}
-        keyExtractor={item => data.item.number.toString()}
-      />
-      <Text style={{ fontSize: 11, color: "silver" }}>
-        NPI: {data.item.number}
-      </Text>
-    </TouchableOpacity>
-  );
-
-  PracticeLocations = data => {
-    return (
-      <View>
-        <Text style={{ fontSize: 12, color: "gray" }}>
-          {data.item.city}, {data.item.state}
-        </Text>
-      </View>
-    );
+  static navigationOptions = {
+    title: "Organization"
   };
 
   render() {
-    if (this.state.loading) {
-      return (
-        <View style={styles.loader}>
-          <Text>loading...</Text>
-          <ActivityIndicator size="large" color="#0c9" />
-        </View>
-      );
-    }
+    const DeviceWidth = Dimensions.get("window").width;
+    const { navigate } = this.props.navigation;
 
     return (
-      <View style={styles.container}>
-        <Text>results: {this.state.dataSource.results.length}</Text>
-        <FlatList
-          data={this.state.dataSource.results}
-          ItemSeparatorComponent={this.FlatListItemSeparator}
-          renderItem={item => this.renderItem(item)}
-          keyExtractor={item => item.number.toString()}
-        />
-      </View>
+      <ScrollView>
+        <Text></Text>
+        <View
+          style={{
+            flexDirection: "row",
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          <View>
+            <TouchableOpacity
+              onPress={() =>
+                navigate("OrganizationCategory", {
+                  taxonomy_description: "General Acute Care Hospital"
+                })
+              }
+            >
+              <View
+                style={{
+                  width: DeviceWidth / 3,
+                  height: DeviceWidth * 0.2,
+                  marginBottom: 5,
+                  marginLeft: 5,
+                  backgroundColor: "steelblue",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Image
+                  style={{ width: 50, height: 50 }}
+                  source={{
+                    uri:
+                      "https://image.flaticon.com/icons/png/512/504/504276.png"
+                  }}
+                />
+                <Text style={{ color: "white" }}>Hospital</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigate("OrganizationCategory", {
+                  taxonomy_description: "Pharmacy"
+                })
+              }
+            >
+              <View
+                style={{
+                  width: DeviceWidth / 3,
+                  height: DeviceWidth * 0.2,
+                  marginBottom: 5,
+                  marginLeft: 5,
+                  backgroundColor: "skyblue",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Image
+                  style={{ width: 50, height: 50 }}
+                  source={{
+                    uri:
+                      "https://cdn.pixabay.com/photo/2017/05/15/21/58/drug-icon-2316244_960_720.png"
+                  }}
+                />
+                <Text style={{ color: "white" }}>Pharmacy</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigate("OrganizationCategory", {
+                  taxonomy_description: "Medical Supplies"
+                })
+              }
+            >
+              <View
+                style={{
+                  width: DeviceWidth / 3,
+                  height: DeviceWidth * 0.2,
+                  marginBottom: 5,
+                  marginLeft: 5,
+                  backgroundColor: "powderblue",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Image
+                  style={{ width: 50, height: 50 }}
+                  source={{
+                    uri:
+                      "https://image.flaticon.com/icons/png/512/196/196136.png"
+                  }}
+                />
+                <Text style={{ color: "white" }}>Medical Supply</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={() =>
+                navigate("OrganizationCategory", {
+                  taxonomy_description: "General Practice"
+                })
+              }
+            >
+              <View
+                style={{
+                  width: DeviceWidth / 3,
+                  height: DeviceWidth * 0.2,
+                  marginBottom: 5,
+                  marginLeft: 5,
+                  backgroundColor: "steelblue",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Image
+                  style={{ width: 60, height: 60 }}
+                  source={{
+                    uri:
+                      "https://image.flaticon.com/icons/png/512/1869/1869354.png"
+                  }}
+                />
+                <Text style={{ color: "white" }}>Doctor's Office</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigate("OrganizationCategory", {
+                  taxonomy_description: "Skilled Nursing Facility"
+                })
+              }
+            >
+              <View
+                style={{
+                  width: DeviceWidth / 3,
+                  height: DeviceWidth * 0.2,
+                  marginBottom: 5,
+                  marginLeft: 5,
+                  backgroundColor: "skyblue",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Image
+                  style={{ width: 50, height: 50 }}
+                  source={{
+                    uri:
+                      "https://image.flaticon.com/icons/png/512/196/196125.png"
+                  }}
+                />
+                <Text style={{ color: "white" }}>Nursing Facility</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigate("OrganizationCategory", {
+                  taxonomy_description: "Personal Care Attendant"
+                })
+              }
+            >
+              <View
+                style={{
+                  width: DeviceWidth / 3,
+                  height: DeviceWidth * 0.2,
+                  marginBottom: 5,
+                  marginLeft: 5,
+                  backgroundColor: "powderblue",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Image
+                  style={{ width: 50, height: 50 }}
+                  source={{
+                    uri:
+                      "https://image.flaticon.com/icons/png/512/564/564276.png"
+                  }}
+                />
+                <Text style={{ color: "white" }}>Personal Care</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={() =>
+                navigate("OrganizationCategory", {
+                  taxonomy_description: "Dental"
+                })
+              }
+            >
+              <View
+                style={{
+                  width: DeviceWidth / 3,
+                  height: DeviceWidth * 0.2,
+                  marginBottom: 5,
+                  marginLeft: 5,
+                  backgroundColor: "steelblue",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Image
+                  style={{ width: 50, height: 50 }}
+                  source={{
+                    uri:
+                      "https://i.ya-webdesign.com/images/teeth-icon-png-6.png"
+                  }}
+                />
+                <Text style={{ color: "white" }}>Dental</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigate("OrganizationCategory", {
+                  taxonomy_description: "Home Health"
+                })
+              }
+            >
+              <View
+                style={{
+                  width: DeviceWidth / 3,
+                  height: DeviceWidth * 0.2,
+                  marginBottom: 5,
+                  marginLeft: 5,
+                  backgroundColor: "skyblue",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Image
+                  style={{ width: 50, height: 50 }}
+                  source={{
+                    uri:
+                      "https://cdn.pixabay.com/photo/2015/12/28/02/58/home-1110868__340.png"
+                  }}
+                />
+                <Text style={{ color: "white" }}>Home Health</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigate("OrganizationCategory", {
+                  taxonomy_description: "Physical Therapist"
+                })
+              }
+            >
+              <View
+                style={{
+                  width: DeviceWidth / 3,
+                  height: DeviceWidth * 0.2,
+                  marginBottom: 5,
+                  marginLeft: 5,
+                  backgroundColor: "powderblue",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <Image
+                  style={{ width: 50, height: 50 }}
+                  source={{
+                    uri:
+                      "https://image.flaticon.com/icons/png/512/249/249209.png"
+                  }}
+                />
+                <Text style={{ color: "white" }}>Therapist</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -122,3 +317,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   }
 });
+
+export default Organization;
