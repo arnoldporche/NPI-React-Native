@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { Card, Input, Button } from "react-native-elements";
 
-class Individual extends Component {
+class IndividualSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,8 +24,17 @@ class Individual extends Component {
   }
 
   componentDidMount() {
+    const searchFirstName = this.props.navigation.getParam("searchFirstName");
+    const searchLastName = this.props.navigation.getParam("searchLastName");
+    const searchNPI = this.props.navigation.getParam("searchNPI");
+
     fetch(
-      "https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=10&pretty=true&state=NV&city=las vegas&enumeration_type=NPI-1"
+      "https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=10&pretty=true&state=NV&city=las vegas&enumeration_type=NPI-1&first_name=" +
+        searchFirstName +
+        "&last_name=" +
+        searchLastName +
+        "&number=" +
+        searchNPI
     )
       .then(response => response.json())
       .then(responseJson => {
@@ -39,7 +48,7 @@ class Individual extends Component {
   }
 
   static navigationOptions = {
-    title: "Individual"
+    title: "Individual Search"
   };
 
   PracticeLocations = data => {
@@ -54,16 +63,10 @@ class Individual extends Component {
 
   searchNPI = () => {
     const { navigate } = this.props.navigation;
-    const searchFirstName = this.state.firstName;
-    const searchLastName = this.state.lastName;
-    const searchNPI = this.state.npi;
+    const dfnpi = 1346315900;
     console.log("searching..");
     console.log(JSON.stringify(this.state.firstName));
-    navigate("IndividualSearch", {
-      searchFirstName: searchFirstName,
-      searchLastName: searchLastName,
-      searchNPI: searchNPI
-    });
+    navigate("IndividualInfo", { IndividualId: dfnpi });
   };
 
   render() {
@@ -137,6 +140,7 @@ class Individual extends Component {
             />
           </View>
         </View>
+        <Text>Search Results</Text>
         <FlatList
           data={this.state.dataSource.results}
           renderItem={item => renderData(item)}
@@ -185,4 +189,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Individual;
+export default IndividualSearch;
