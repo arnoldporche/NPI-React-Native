@@ -23,19 +23,41 @@ class Individual extends Component {
     };
   }
 
-  componentDidMount() {
-    fetch(
-      "https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=10&pretty=true&state=NV&city=las vegas&enumeration_type=NPI-1"
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-        //console.log(responseJson);
-        this.setState({
-          loading: false,
-          dataSource: responseJson
-        });
-      })
-      .catch(error => console.log(error)); //to catch the errors if any
+  componentDidMount(searchFirstName = "", searchLastName = "", searchNPI = "") {
+    console.log("loading.." + searchNPI);
+
+    if (searchFirstName != "" || searchLastName != "" || searchNPI > 0) {
+      fetch(
+        "https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=10&pretty=true&state=NV&enumeration_type=NPI-1&first_name=" +
+          searchFirstName +
+          "&last_name=" +
+          searchLastName +
+          "&number=" +
+          searchNPI
+      )
+        .then(response => response.json())
+        .then(responseJson => {
+          //console.log(responseJson);
+          this.setState({
+            loading: false,
+            dataSource: responseJson
+          });
+        })
+        .catch(error => console.log(error)); //to catch the errors if any
+    } else {
+      fetch(
+        "https://npiregistry.cms.hhs.gov/api/?version=2.1&limit=10&pretty=true&state=NV&enumeration_type=NPI-1"
+      )
+        .then(response => response.json())
+        .then(responseJson => {
+          //console.log(responseJson);
+          this.setState({
+            loading: false,
+            dataSource: responseJson
+          });
+        })
+        .catch(error => console.log(error)); //to catch the errors if any
+    }
   }
 
   static navigationOptions = {
@@ -52,18 +74,19 @@ class Individual extends Component {
     );
   };
 
-  searchNPI = () => {
-    const { navigate } = this.props.navigation;
-    const searchFirstName = this.state.firstName;
-    const searchLastName = this.state.lastName;
-    const searchNPI = this.state.npi;
-    console.log("searching..");
-    console.log(JSON.stringify(this.state.firstName));
+  queryNPI = () => {
+    //const { navigate } = this.props.navigation;
+    let searchFirstName = this.state.firstName;
+    let searchLastName = this.state.lastName;
+    let searchNPI = this.state.npi;
+    /*
     navigate("IndividualSearch", {
       searchFirstName: searchFirstName,
       searchLastName: searchLastName,
       searchNPI: searchNPI
     });
+    */
+    this.componentDidMount(searchFirstName, searchLastName, searchNPI);
   };
 
   render() {
@@ -133,7 +156,7 @@ class Individual extends Component {
             <Button
               title="Submit"
               color="#f194ff"
-              onPress={() => this.searchNPI()}
+              onPress={() => this.queryNPI()}
             />
           </View>
         </View>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Home from "./HomeComponent";
 import Individual from "./IndividualComponent";
-import IndividualSearch from "./IndividualSearchComponent";
 import IndividualInfo from "./IndividualInfoComponent";
 import Organization from "./OrganizationComponent";
 import OrganizationCategory from "./OrganizationCategoryComponent";
@@ -51,7 +50,6 @@ const OrganizationNavigator = createStackNavigator(
 const IndividualNavigator = createStackNavigator(
   {
     Individual: { screen: Individual },
-    IndividualSearch: { screen: IndividualSearch },
     IndividualInfo: { screen: IndividualInfo }
   },
   {
