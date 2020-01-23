@@ -8,7 +8,7 @@ import {
   ScrollView,
   Linking
 } from "react-native";
-import { Card } from "react-native-elements";
+import { Card, Button } from "react-native-elements";
 
 class OrganizationInfo extends Component {
   static navigationOptions = {
@@ -77,6 +77,8 @@ class OrganizationInfo extends Component {
   };
 
   render() {
+    const { navigate } = this.props.navigation;
+
     const renderData = data => {
       return (
         <View>
@@ -118,6 +120,13 @@ class OrganizationInfo extends Component {
 
     return (
       <ScrollView>
+        <View style={styles.row}>
+          <Button
+            title="Back"
+            color="#f194ff"
+            onPress={() => navigate("Organization")}
+          />
+        </View>
         <FlatList
           data={this.state.dataSource.results}
           renderItem={item => renderData(item)}
@@ -142,6 +151,11 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     margin: 5,
     backgroundColor: "#fff"
+  },
+  row: {
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: "#64B5F6"
   }
 });
 

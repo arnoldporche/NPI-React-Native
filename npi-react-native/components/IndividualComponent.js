@@ -6,8 +6,7 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
-  ScrollView,
-  TextInput
+  ScrollView
 } from "react-native";
 import { Card, Input, Button } from "react-native-elements";
 
@@ -195,16 +194,6 @@ const styles = StyleSheet.create({
     borderColor: "#cccccc",
     borderBottomWidth: 1,
     marginBottom: 10
-  },
-  inputdate: {
-    fontSize: 14,
-    marginBottom: -12,
-    color: "#6a4595"
-  },
-  inputcvv: {
-    fontSize: 14,
-    marginBottom: -12,
-    color: "#6a4595"
   }
 });
 
